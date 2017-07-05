@@ -18,7 +18,7 @@
     ],
     "securityDefinitions": {
         "GooleAuth": {
-            "description": "add a header *authorization* with value *Bearer <Google Token>*",
+            "description": "add a header *authorization* with value *Bearer <Google Token>*\n",
             "type": "apiKey",
             "in": "header",
             "name": "authorization"
