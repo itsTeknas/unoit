@@ -1,0 +1,782 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "UNO-IT"
+    },
+    "host": "on-board-app.appspot.com",
+    "basePath": "/_ah/api",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json",
+        "text/xml"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "GooleAuth": {
+            "description": "add a header *authorization* with value *Bearer <Google Token>*",
+            "type": "apiKey",
+            "in": "header",
+            "name": "authorization"
+        }
+    },
+    "tags": [
+        {
+            "name": "UserApi"
+        },
+        {
+            "name": "AdminApi"
+        }
+    ],
+    "parameters": {
+        "post_id": {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+        },
+        "post": {
+            "name": "post",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "authorEmail": {
+                        "type": "string"
+                    },
+                    "authorName": {
+                        "type": "string"
+                    },
+                    "reviewedBy": {
+                        "type": "string"
+                    },
+                    "reviewTimeStamp": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "isReviewed": {
+                        "type": "boolean"
+                    },
+                    "isApproved": {
+                        "type": "boolean"
+                    },
+                    "timeStamp": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "postTitle": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "isFeatured": {
+                        "type": "boolean"
+                    },
+                    "postContent": {
+                        "type": "string"
+                    },
+                    "photoUrl": {
+                        "type": "string"
+                    },
+                    "sendPushNotifications": {
+                        "type": "boolean"
+                    },
+                    "authorFirebaseUID": {
+                        "type": "string"
+                    },
+                    "authorProfilePic": {
+                        "type": "string"
+                    },
+                    "isVotingPost": {
+                        "type": "boolean"
+                    },
+                    "voteUpdateTimestamp": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "candidateNames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "voteCounts": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/appUserApi/v1/register": {
+            "put": {
+                "summary": "register",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "firebaseUID": {
+                                    "type": "string"
+                                },
+                                "gcmInstanceId": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "profilePic": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registered"
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/castVote/{post_id}/{candidate}": {
+            "post": {
+                "summary": "cast a vote in a poll",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "required": true
+                    },
+                    {
+                        "name": "candidate",
+                        "in": "path",
+                        "description": "Candidate ID",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vote Caster"
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/dataversion": {
+            "get": {
+                "summary": "get the timestamp whrn the psots were last updated",
+                "tags": [
+                    "UserApi"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data version",
+                        "schema": {
+                            "title": "data_version",
+                            "type": "object",
+                            "properties": {
+                                "updateTimeStamp": {
+                                    "type": "integer",
+                                    "format": "int64",
+                                    "description": "the timestamp when posts were last updated"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/post/{post_id}": {
+            "get": {
+                "summary": "get a single post",
+                "tags": [
+                    "UserApi"
+                ],
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "post",
+                        "schema": {
+                            "$ref": "#/definitions/post"
+                        }
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/collectionresponse_post": {
+            "get": {
+                "summary": "get a list of all posts",
+                "tags": [
+                    "UserApi"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "a list of posts",
+                        "schema": {
+                            "title": "posts",
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/post"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "get the current users posts",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "TODO: Complete this"
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/newPost": {
+            "post": {
+                "summary": "get a list of all posts",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Done"
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/isUserAdmin": {
+            "get": {
+                "summary": "Get is User Admin",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "if email is present, user is admin",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/notifyFriendForChat/{chat_uid}/{my_uid}/{receipant_email}": {
+            "post": {
+                "summary": "Notify Friend for Chat",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "chat_uid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "my_uid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "receipant_email",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/appUserApi/v1/notifyFriendForNewMessage/{chat_uid}/{my_uid}/{receipant_email}/{message}": {
+            "post": {
+                "summary": "Notify Friend for Chat",
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "chat_uid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "my_uid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "receipant_email",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/UploadServlet": {
+            "post": {
+                "summary": "Upload images",
+                "description": "the path is /UploadServlet ie. its not related to any other basepath",
+                "consumes": [
+                    "multipart/form-data",
+                    "application/x-www-form-urlencoded"
+                ],
+                "tags": [
+                    "UserApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "file",
+                        "type": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "uploaded"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/approvePost/{post_id}": {
+            "post": {
+                "summary": "Approve post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "approved"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/approvePostWithPush/{post_id}": {
+            "post": {
+                "summary": "Approve with push",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "approved"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/post/{post_id}": {
+            "delete": {
+                "summary": "Delete post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/disapprovePost/{post_id}": {
+            "post": {
+                "summary": "Disapprove post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "disapproved"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/editPost/{post_id}": {
+            "post": {
+                "summary": "Edit post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    },
+                    {
+                        "name": "content",
+                        "type": "string",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "name": "photoURL",
+                        "type": "string",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "title",
+                        "type": "string",
+                        "in": "query",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "disapproved"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/featurePost/{post_id}": {
+            "post": {
+                "summary": "Feature Post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "featured"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/unFeaturePost/{post_id}": {
+            "post": {
+                "summary": "Feature Post",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/post_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "featured"
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/collectionresponse_post": {
+            "get": {
+                "summary": "Get Review Queue",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "list of posts",
+                        "schema": {
+                            "title": "posts",
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/post"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/appAdminApi/v1/collectionresponse_post/{is_approved_list}": {
+            "post": {
+                "summary": "Get Reviewed Posts",
+                "description": "pass true to get approved list, pass false for disapproved list",
+                "tags": [
+                    "AdminApi"
+                ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "is_approved_list",
+                        "type": "boolean",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "list of posts",
+                        "schema": {
+                            "title": "posts",
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/post"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "post": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "authorEmail": {
+                    "type": "string"
+                },
+                "authorName": {
+                    "type": "string"
+                },
+                "reviewedBy": {
+                    "type": "string"
+                },
+                "reviewTimeStamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "isReviewed": {
+                    "type": "boolean"
+                },
+                "isApproved": {
+                    "type": "boolean"
+                },
+                "timeStamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "postTitle": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "isFeatured": {
+                    "type": "boolean"
+                },
+                "postContent": {
+                    "type": "string"
+                },
+                "photoUrl": {
+                    "type": "string"
+                },
+                "sendPushNotifications": {
+                    "type": "boolean"
+                },
+                "authorFirebaseUID": {
+                    "type": "string"
+                },
+                "authorProfilePic": {
+                    "type": "string"
+                },
+                "isVotingPost": {
+                    "type": "boolean"
+                },
+                "voteUpdateTimestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "candidateNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "voteCounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            }
+        }
+    }
+}
