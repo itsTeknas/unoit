@@ -200,10 +200,10 @@ NSInteger kSWGUserApiApiMissingParamErrorCode = 234513;
 ///
 /// get the current users posts
 /// 
-///  @returns void
+///  @returns SWGPosts*
 ///
 -(NSURLSessionTask*) appUserApiV1CollectionresponsePostPostWithCompletionHandler: 
-    (void (^)(NSError* error)) handler {
+    (void (^)(SWGPosts* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/appUserApi/v1/collectionresponse_post"];
 
     // remove format in URL if needed
@@ -244,10 +244,10 @@ NSInteger kSWGUserApiApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: nil
+                              responseType: @"SWGPosts*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler(error);
+                                    handler((SWGPosts*)data, error);
                                 }
                             }];
 }

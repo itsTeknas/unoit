@@ -57,11 +57,11 @@ extern NSInteger kSWGUserApiApiMissingParamErrorCode;
 /// 
 ///
 /// 
-///  code:200 message:"TODO: Complete this"
+///  code:200 message:"a list of posts"
 ///
-/// @return 
+/// @return SWGPosts*
 -(NSURLSessionTask*) appUserApiV1CollectionresponsePostPostWithCompletionHandler: 
-    (void (^)(NSError* error)) handler;
+    (void (^)(SWGPosts* output, NSError* error)) handler;
 
 
 /// get the timestamp whrn the psots were last updated

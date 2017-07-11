@@ -285,7 +285,19 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "TODO: Complete this"
+                        "description": "a list of posts",
+                        "schema": {
+                            "title": "posts",
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/post"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

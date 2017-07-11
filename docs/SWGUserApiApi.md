@@ -120,7 +120,7 @@ No authorization required
 # **appUserApiV1CollectionresponsePostPost**
 ```objc
 -(NSURLSessionTask*) appUserApiV1CollectionresponsePostPostWithCompletionHandler: 
-        (void (^)(NSError* error)) handler;
+        (void (^)(SWGPosts* output, NSError* error)) handler;
 ```
 
 get the current users posts
@@ -140,7 +140,10 @@ SWGUserApiApi*apiInstance = [[SWGUserApiApi alloc] init];
 
 // get the current users posts
 [apiInstance appUserApiV1CollectionresponsePostPostWithCompletionHandler: 
-          ^(NSError* error) {
+          ^(SWGPosts* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
                         if (error) {
                             NSLog(@"Error calling SWGUserApiApi->appUserApiV1CollectionresponsePostPost: %@", error);
                         }
@@ -152,7 +155,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**SWGPosts***](SWGPosts.md)
 
 ### Authorization
 

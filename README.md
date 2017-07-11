@@ -21,7 +21,7 @@ Add the following to the Podfile:
 pod 'SwaggerClient', :git => 'https://github.com/itsTeknas/unoit.git'
 ```
 
-To specify a particular branch, append `, :branch => 'master'`
+To specify a particular branch, append `, :branch => 'branch-name-here'`
 
 To specify a particular commit, append `, :commit => '11aa22'`
 
