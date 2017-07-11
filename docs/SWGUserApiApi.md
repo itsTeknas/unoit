@@ -83,6 +83,13 @@ get a list of all posts
 
 ### Example 
 ```objc
+SWGDefaultConfiguration *apiConfig = [SWGDefaultConfiguration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: GooleAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"authorization"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"authorization"];
+
 
 
 SWGUserApiApi*apiInstance = [[SWGUserApiApi alloc] init];
@@ -108,7 +115,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[GooleAuth](../README.md#GooleAuth)
 
 ### HTTP request headers
 

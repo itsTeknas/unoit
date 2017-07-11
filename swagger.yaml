@@ -184,6 +184,8 @@ paths:
       summary: get a list of all posts
       tags:
         - UserApi
+      security:
+        - GooleAuth: []
       responses:
         200:
           description: a list of posts

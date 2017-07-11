@@ -255,6 +255,11 @@
                 "tags": [
                     "UserApi"
                 ],
+                "security": [
+                    {
+                        "GooleAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "a list of posts",

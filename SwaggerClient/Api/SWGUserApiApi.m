@@ -172,7 +172,7 @@ NSInteger kSWGUserApiApiMissingParamErrorCode = 234513;
     NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json", @"text/xml"]];
 
     // Authentication setting
-    NSArray *authSettings = @[];
+    NSArray *authSettings = @[@"GooleAuth"];
 
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
